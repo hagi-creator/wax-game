@@ -1,0 +1,59 @@
+import React, { useEffect, useState } from "react";
+import { UALProvider, withUAL } from "ual-reactjs-renderer";
+import { Anchor } from "ual-anchor";
+
+const appName = "WaxGame";
+const chain = {
+  chainId: "1064487b3cd1a897...", // WAX Chain ID
+  rpcEndpoints: [
+    {
+      protocol: "https",
+      host: "wax.greymass.com",
+      port: 443,
+    },
+  ],
+};
+
+const anchor = new Anchor([chain], { appName });
+
+function AuthComponent({ ual }) {
+  const [accountName, setAccountName] = useState(null);
+
+  useEffect(() => {
+    if (ual.activeUser) {
+      ual.activeUser.getAccountName().then(setAccountName);
+    }
+  }, [ual.activeUser]);
+
+  const login = () => {
+    ual.showModal();
+  };
+
+  const logout = () => {
+    ual.logout();
+    setAccountName(null);
+  };
+
+  return (
+    <div>
+      {accountName ? (
+        <>
+          <p>Привет, {accountName}!</p>
+          <button onClick={logout}>Выйти</button>
+        </>
+      ) : (
+        <button onClick={login}>Войти через Anchor</button>
+      )}
+    </div>
+  );
+}
+
+const AuthWithUAL = withUAL(AuthComponent);
+
+export default function AnchorLoginWrapper() {
+  return (
+    <UALProvider chains={[chain]} authenticators={[anchor]} appName={appName}>
+      <AuthWithUAL />
+    </UALProvider>
+  );
+}

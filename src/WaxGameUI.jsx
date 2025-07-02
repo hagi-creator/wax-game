@@ -190,3 +190,14 @@ export default function WaxGameUI() {
     </div>
   );
 }
+import React from "react";
+import AnchorLoginWrapper from "./AnchorLogin";
+
+export default function WaxGameUI() {
+  return (
+    <div>
+      <h1>WAX Blockchain Game</h1>
+      <AnchorLoginWrapper />
+    </div>
+  );
+}
