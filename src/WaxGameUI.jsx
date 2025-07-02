@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useUAL } from "ual-reactjs-renderer";
+import AnchorLoginWrapper from "./AnchorLogin";
 
 const tools = {
   lomata: { name: "Ломата", rarity: "Common", tokenPower: 5, crystalPower: 1 },
@@ -26,6 +28,7 @@ function formatTime(ms) {
 }
 
 export default function WaxGameUI() {
+  const { activeUser, login, logout, isLoading } = useUAL();
   const [user, setUser] = useState(() => ({
     tokens: 0,
     crystals: 0,
@@ -99,6 +102,27 @@ export default function WaxGameUI() {
   return (
     <div className="p-4 max-w-xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold">🌌 Командный Центр</h1>
+
+      {isLoading && <p>Загрузка...</p>}
+
+      {!activeUser ? (
+        <button
+          onClick={login}
+          className="px-4 py-2 bg-green-600 text-white rounded"
+        >
+          Войти через Anchor
+        </button>
+      ) : (
+        <div className="space-y-2">
+          <p>✅ Вы вошли как: <strong>{activeUser.getAccountName()}</strong></p>
+          <button
+            onClick={logout}
+            className="px-4 py-2 bg-red-600 text-white rounded"
+          >
+            Выйти
+          </button>
+        </div>
+      )}
 
       <div>
         <p>💰 Токены: {user.tokens} $CORE</p>
@@ -187,17 +211,6 @@ export default function WaxGameUI() {
           ))}
         </div>
       )}
-    </div>
-  );
-}
-import React from "react";
-import AnchorLoginWrapper from "./AnchorLogin";
-
-export default function WaxGameUI() {
-  return (
-    <div>
-      <h1>WAX Blockchain Game</h1>
-      <AnchorLoginWrapper />
     </div>
   );
 }
