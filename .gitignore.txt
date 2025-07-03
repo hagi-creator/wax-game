@@ -1,5 +1,0 @@
-dist
-.vercel
-.next
-build
-.DS_Store
