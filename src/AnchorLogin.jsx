@@ -1,7 +1,9 @@
-import React from "react";
-import { withUAL } from "ual-reactjs-renderer";
+import React from 'react';
+import { useUAL } from 'ual-reactjs-renderer';
 
-function AnchorLogin({ ual }) {
+export default function AnchorLogin() {
+  const [ual] = useUAL();
+
   const login = () => ual.showModal();
   const logout = () => ual.logout();
 
@@ -11,12 +13,12 @@ function AnchorLogin({ ual }) {
         <button
           onClick={login}
           style={{
-            padding: "10px 20px",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
+            padding: '10px 20px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: 4,
+            cursor: 'pointer',
           }}
         >
           Войти через Anchor
@@ -27,12 +29,12 @@ function AnchorLogin({ ual }) {
           <button
             onClick={logout}
             style={{
-              padding: "10px 20px",
-              backgroundColor: "#f44336",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
+              padding: '10px 20px',
+              backgroundColor: '#f44336',
+              color: 'white',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
             }}
           >
             Выйти
@@ -42,5 +44,3 @@ function AnchorLogin({ ual }) {
     </div>
   );
 }
-
-export default withUAL(AnchorLogin);
