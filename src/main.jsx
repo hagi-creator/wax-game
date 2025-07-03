@@ -1,16 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-// ✅ main.jsx — главный вход приложения
-import React from "react";
-import ReactDOM from "react-dom/client";
 import { UALProvider } from "ual-reactjs-renderer";
 import { Anchor } from "ual-anchor";
 import App from "./WaxGameUI";
