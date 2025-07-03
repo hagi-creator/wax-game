@@ -1,59 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { UALProvider, withUAL } from "ual-reactjs-renderer";
-import { Anchor } from "ual-anchor";
+// ✅ AnchorLogin.jsx — авторизация через Anchor Wallet
+import React from "react";
+import { withUAL } from "ual-reactjs-renderer";
 
-const appName = "WaxGame";
-const chain = {
-  chainId: "1064487b3cd1a897...", // WAX Chain ID
-  rpcEndpoints: [
-    {
-      protocol: "https",
-      host: "wax.greymass.com",
-      port: 443,
-    },
-  ],
-};
-
-const anchor = new Anchor([chain], { appName });
-
-function AuthComponent({ ual }) {
-  const [accountName, setAccountName] = useState(null);
-
-  useEffect(() => {
-    if (ual.activeUser) {
-      ual.activeUser.getAccountName().then(setAccountName);
-    }
-  }, [ual.activeUser]);
-
-  const login = () => {
-    ual.showModal();
-  };
-
-  const logout = () => {
-    ual.logout();
-    setAccountName(null);
-  };
+function AnchorLogin({ ual }) {
+  const login = () => ual.showModal();
+  const logout = () => ual.logout();
 
   return (
     <div>
-      {accountName ? (
-        <>
-          <p>������, {accountName}!</p>
-          <button onClick={logout}>�����</button>
-        </>
+      {!ual.activeUser ? (
+        <button
+          onClick={login}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Войти через Anchor
+        </button>
       ) : (
-        <button onClick={login}>����� ����� Anchor</button>
+        <div>
+          <p>✅ Вы вошли как: {ual.activeUser.getAccountName()}</p>
+          <button
+            onClick={logout}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#f44336",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Выйти
+          </button>
+        </div>
       )}
     </div>
   );
 }
 
-const AuthWithUAL = withUAL(AuthComponent);
-
-export default function AnchorLoginWrapper() {
-  return (
-    <UALProvider chains={[chain]} authenticators={[anchor]} appName={appName}>
-      <AuthWithUAL />
-    </UALProvider>
-  );
-}
+export default withUAL(AnchorLogin);

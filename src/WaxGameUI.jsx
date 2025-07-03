@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useUAL } from "ual-reactjs-renderer";
-import AnchorLoginWrapper from "./AnchorLogin";
+import AnchorLogin from "./AnchorLogin";
 
 const tools = {
   lomata: { name: "Ломата", rarity: "Common", tokenPower: 5, crystalPower: 1 },
